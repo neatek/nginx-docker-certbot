@@ -15,11 +15,16 @@ To run these scripts, superuser (sudo) privileges are required.
 
 ## Installation Instructions
 
-1. Download and run the first script with one command:
+To install and configure Nginx, Certbot, and Docker, follow these steps:
+
+1. Download and run both scripts sequentially with one command, replacing `example.com` with your actual domain name:
 
     ```bash
-    sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/install.sh)"
+    sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/install.sh) && \
+    curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/setup_domain.sh | sudo bash -s -- example.com"
     ```
+
+    This will install Nginx, Certbot, and Docker, configure Nginx with Certbot, and obtain an SSL certificate for the specified domain.
 
 ## Script Functions
 
