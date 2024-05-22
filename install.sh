@@ -45,4 +45,12 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sudo systemctl start docker
 sudo systemctl enable docker
 
+# Установка SSHGuard
+echo "Установка SSHGuard..."
+sudo apt-get install -y sshguard
+
+# Запуск и добавление SSHGuard в автозагрузку
+sudo systemctl start sshguard
+sudo systemctl enable sshguard
+
 echo "Установка завершена!"
