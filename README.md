@@ -1,74 +1,74 @@
-# Useful Scripts
+# Полезные скрипты
 
-This repository contains scripts for automatically installing Nginx, Certbot via Snap, and Docker on Ubuntu. The scripts also configure Nginx to use Certbot and set up automatic certificate renewal.
+Этот репозиторий содержит скрипты для автоматической установки Nginx, Certbot через Snap и Docker на Ubuntu. Скрипты также настраивают Nginx для использования Certbot и настраивают автоматическое обновление сертификатов.
 
-## Contents
+## Содержание
 
-- [Requirements](#requirements)
-- [Installation Instructions](#installation-instructions)
-- [Script Functions](#script-functions)
-- [Description of the Second Script](#description-of-the-second-script)
+- [Требования](#требования)
+- [Инструкции по установке](#инструкции-по-установке)
+- [Функции скриптов](#функции-скриптов)
+- [Описание второго скрипта](#описание-второго-скрипта)
 
-## Requirements
+## Требования
 
-To run these scripts, superuser (sudo) privileges are required.
+Для запуска этих скриптов требуются привилегии суперпользователя (sudo).
 
-## Installation Instructions
+## Инструкции по установке
 
-To install and configure Nginx, Certbot, and Docker, follow these steps:
+Чтобы установить и настроить Nginx, Certbot и Docker, выполните следующие шаги:
 
-1. Download and run both scripts sequentially with one command, replacing `example.com` with your actual domain name:
+1. Скачайте и запустите оба скрипта последовательно с помощью одной команды, заменив `example.com` на ваше действительное доменное имя:
 
     ```bash
     sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/install.sh) && \
     curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/setup_domain.sh | sudo bash -s -- example.com"
     ```
 
-    This will install Nginx, Certbot, and Docker, configure Nginx with Certbot, and obtain an SSL certificate for the specified domain.
+    Это установит Nginx, Certbot и Docker, настроит Nginx с Certbot и получит SSL-сертификат для указанного домена.
 
-## Script Functions
+## Функции скриптов
 
-1. Updates the package list.
-2. Installs Nginx and Snapd.
-3. Starts Nginx and enables it to start on boot.
-4. Installs Certbot via Snap.
-5. Creates a symbolic link for Certbot.
-6. Sets up automatic certificate renewal checks.
-7. Installs Docker and its dependencies.
-8. Adds the official Docker GPG key and configures the Docker repository.
-9. Installs Docker Engine and necessary components.
-10. Starts Docker and enables it to start on boot.
+1. Обновляет список пакетов.
+2. Устанавливает Nginx и Snapd.
+3. Запускает Nginx и настраивает его на автозапуск.
+4. Устанавливает Certbot через Snap.
+5. Создает символическую ссылку для Certbot.
+6. Настраивает автоматическую проверку обновления сертификатов.
+7. Устанавливает Docker и его зависимости.
+8. Добавляет официальный ключ GPG Docker и настраивает репозиторий Docker.
+9. Устанавливает Docker Engine и необходимые компоненты.
+10. Запускает Docker и настраивает его на автозапуск.
 
-## Notes
+## Примечания
 
-- Ensure you have a domain name configured to point to your server for Certbot to obtain an SSL certificate.
-- The script checks for automatic certificate renewal using the `certbot renew --dry-run` command.
+- Убедитесь, что у вас есть настроенное доменное имя, указывающее на ваш сервер, чтобы Certbot мог получить SSL-сертификат.
+- Скрипт проверяет автоматическое обновление сертификатов с помощью команды `certbot renew --dry-run`.
 
-If you encounter any issues with the installation or have questions, please refer to the documentation of the respective tools:
+Если у вас возникли проблемы с установкой или у вас есть вопросы, обратитесь к документации соответствующих инструментов:
 
 - [Nginx](https://nginx.org/en/docs/)
 - [Certbot](https://certbot.eff.org/docs/)
 - [Docker](https://docs.docker.com/)
 
-## Description of the Second Script
+## Описание второго скрипта
 
-This script adds a domain configuration to Nginx and runs Certbot to obtain an SSL certificate for the specified domain.
+Этот скрипт добавляет конфигурацию домена в Nginx и запускает Certbot для получения SSL-сертификата для указанного домена.
 
-### Installation Instructions
+### Инструкции по установке
 
-1. Download and run the second script with one command:
+1. Скачайте и запустите второй скрипт с помощью одной команды:
 
     ```bash
     sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/neatek/nginx-docker-certbot/main/setup_domain.sh)"
     ```
 
-### Script Functions
+### Функции скрипта
 
-1. Prompts the user to enter the domain name.
-2. Adds a configuration for the specified domain to the `/etc/nginx/sites-available/default` file.
-3. Creates a directory for the domain and adds a sample `index.html` file.
-4. Tests the Nginx configuration and reloads it.
-5. Runs Certbot to obtain an SSL certificate for the specified domain.
-6. Checks for automatic certificate renewal.
+1. Предлагает пользователю ввести доменное имя.
+2. Добавляет конфигурацию для указанного домена в файл `/etc/nginx/sites-available/default`.
+3. Создает каталог для домена и добавляет образец файла `index.html`.
+4. Проверяет конфигурацию Nginx и перезагружает ее.
+5. Запускает Certbot для получения SSL-сертификата для указанного домена.
+6. Проверяет автоматическое обновление сертификатов.
 
-This script simplifies the setup of Nginx and SSL certificates for your domain by adding the necessary configuration and automatically setting up Certbot to work with Nginx.
+Этот скрипт упрощает настройку Nginx и SSL-сертификатов для вашего домена, добавляя необходимую конфигурацию и автоматически настраивая Certbot для работы с Nginx.
