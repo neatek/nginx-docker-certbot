@@ -34,10 +34,6 @@ sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 # Настройка репозитория Docker
-# echo \
-#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-#   $(lsb_release -cs) stable" | \
-#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
@@ -50,6 +46,19 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 # Запуск и добавление Docker в автозагрузку
 sudo systemctl start docker
 sudo systemctl enable docker
+
+# Устанавливаем новое зеркало для Docker Compose
+new_mirror="https://files.m.daocloud.io/github.com/docker/compose"
+compose_config_path="$HOME/.docker/config.json"
+if [ -f "$compose_config_path" ]; then
+    jq '. + {"registry-mirrors": ["'$new_mirror'"]}' "$compose_config_path" > temp_config.json && mv temp_config.json "$compose_config_path"
+    echo "Зеркало для Docker Compose успешно изменено на: $new_mirror"
+    echo "Перезагрузка Docker Compose..."
+    docker-compose reload
+    echo "Docker Compose успешно перезагружен."
+else
+    echo "Файл конфигурации Docker Compose не найден. Убедитесь, что Docker Compose установлен и запущен."
+fi
 
 # Установка SSHGuard
 echo "Установка SSHGuard..."
