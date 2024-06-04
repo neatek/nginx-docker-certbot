@@ -60,6 +60,11 @@ else
     echo "Файл конфигурации Docker Compose не найден. Убедитесь, что Docker Compose установлен и запущен."
 fi
 
+# Прокси для hub.docker.com
+sudo mkdir -p /etc/docker && echo '{ "registry-mirrors" : [ "https://dockerhub.timeweb.cloud" ] }' | sudo tee /etc/docker/daemon.json > /dev/null
+sudo mkdir -p ~/.config/docker/ && echo '{ "registry-mirrors" : [ "https://dockerhub.timeweb.cloud" ] }' | sudo tee ~/.config/docker/daemon.json > /dev/null
+systemctl reload docker
+
 # Установка SSHGuard
 echo "Установка SSHGuard..."
 sudo apt-get install -y sshguard
